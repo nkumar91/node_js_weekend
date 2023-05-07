@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+        <input type="text" name="name" id="a1">
+        <input type="text" name="email" id="a2">
+        <input type="button" value="data mangao" onclick="apiCallKaro()">
+        
+    
+
+    <script>
+        async function apiCallKaro(){
+            const name = document.querySelector("#a1").value
+            const email = document.querySelector("#a2").value
+             const res =    await fetch(`http://localhost:8082/jodo?name=${name}&email=${email}`)
+             const data = await res.json()
+             if(data){
+                console.log(data)
+             }
+        }
+      
+    </script>
+</body>
+</html>
