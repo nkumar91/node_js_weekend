@@ -2,7 +2,21 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const multer = require('multer')
+const authRouter = require('./src/routes/AuthRouter')
+
+
 app.use(cors())
+app.use(express.json()) 
+app.use(express.urlencoded({extended:true}))
+app.use(multer().none())
+
+
+app.use("/auth",authRouter)
+
+
+
+
+
 
 // app.get("/data",function(request,response){
   
@@ -39,33 +53,31 @@ app.use(cors())
 
  // middleware  (application level middleware , built middleware,erorr middleware,route based middleware)
 //app.use('/signup',express.json()) 
-app.use(express.json()) 
-app.use(express.urlencoded({extended:true}))
-app.use(multer().none())
-app.post("/signup",function(request,response){
-    const rdata = request.body
-    response.json({data:rdata})
-})
 
-app.post("/signupp",function(request,response){
-    const rdata = request.body
-    response.json({data:rdata})
-})
+// app.post("/signup",function(request,response){
+//     const rdata = request.body
+//     response.json({data:rdata})
+// })
 
-app.post("/signup/:id/:my",function(request,response){
-    const x = request.params.my
-    response.json({data:x})
-})
+// app.post("/signupp",function(request,response){
+//     const rdata = request.body
+//     response.json({data:rdata})
+// })
 
-app.post("/urlencode",function(request,response){
-    const data = request.body
-    response.json({data:data})
-})
+// app.post("/signup/:id/:my",function(request,response){
+//     const x = request.params.my
+//     response.json({data:x})
+// })
 
-app.post("/formdata", function(request,response){
-    const data = request.body
-    response.json({data:data})
-})
+// app.post("/urlencode",function(request,response){
+//     const data = request.body
+//     response.json({data:data})
+// })
+
+// app.post("/formdata",   function(request,response){
+//     const data = request.body
+//     response.json({data:data})
+// })
 
 
 
