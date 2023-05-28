@@ -1,32 +1,41 @@
+const SignupModel = require("../model/AccountModel");
 
-exports.signup = (request,response)=>{
+exports.signup = async (request,response)=>{
     try{
-        const bodyData = request.body
-        if(bodyData.name.length > 5)
-                response.status(200).json({
-                    status:"success",
-                    token:"dfghwe8e5233",
-                    name:"Mukesh",
-                    email:"mukesh@s.com",
-                    id:4,
-                    message:"Signup Successfully"
-                })
-       else{
-            response.status(200).json({
-                status:"failed",
-            
-            
-                message:"your name length should be greater than 5"
-            })
-        }          
+      const body = request.body;
+      const signupData = {
+            name:body.name,
+            email:body.email,
+            password:body.password
+      }
+      const dbRes = await SignupModel.create(signupData);
+      if(dbRes){
+        response.status(200).json({
+            status:"success",
+            message:"Signup Successfully",
+            data:dbRes
+          })
+      }
     }
-    catch(err){
-        response.status(500).json({
-            status:"failed",
-            message:"invalid details"
-        })
+    catch(error){
+          const resError = {}
+          resError.status = "failed"
+          if (error.name === "ValidationError") {
+              let errors = {};
+              Object.keys(error.errors).forEach((key) => {
+                errors[key] = error.errors[key].message;
+              });
+              resError.error = errors;
+            }
+          response.json(resError)
+         
     }
 }
+
+
+
+
+
 
 exports.signin = (request,response) =>{
     response.json({

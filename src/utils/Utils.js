@@ -1,12 +1,8 @@
-// exports.fun = ()=>{
-//     return "Mujhe Maar Daalo"
-// }
+const bcrypt =  require('bcryptjs')
 
-// exports.kehlo = ()=>{
-//     return "Mujhe Jane DO"
-// }
+exports.passwordEncoded = (password)=>{
+    const salt = bcrypt.genSaltSync(10);
+    return bcrypt.hashSync(password,salt);
+}
 
-// console.log("jjjjjjj")
-// exports.BhaiPrintKaro = function(){
-//     console.log("Mai Fee Nahi Dunga")
-// }
+
