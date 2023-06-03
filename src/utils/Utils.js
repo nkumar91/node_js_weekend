@@ -6,3 +6,8 @@ exports.passwordEncoded = (password)=>{
 }
 
 
+exports.comparePassword = (oldPass,newPass)=>{
+    return bcrypt.compareSync(newPass,oldPass)
+                            // bfidhgfigdsigiusfyuhfufurgiurhgiur,12345
+}
+

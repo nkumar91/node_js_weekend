@@ -1,4 +1,5 @@
 const SignupModel = require("../model/AccountModel");
+const { comparePassword } = require("../utils/Utils");
 
 exports.signup = async (request,response)=>{
     try{
@@ -13,7 +14,10 @@ exports.signup = async (request,response)=>{
         response.status(200).json({
             status:"success",
             message:"Signup Successfully",
-            data:dbRes
+            data:{
+              name:dbRes.name,
+              _id:dbRes._id
+            }
           })
       }
     }
@@ -37,8 +41,35 @@ exports.signup = async (request,response)=>{
 
 
 
-exports.signin = (request,response) =>{
-    response.json({
-        status:"signin"
-    })
+exports.signin = async (request,response)=> {
+      try{
+        const body = request.body;
+        const query = {email:body.email}
+        const resData =  await  SignupModel.findOne(query,{name:1,_id:0,password:1})
+        if(comparePassword(resData.password,body.password)){
+         if(resData)
+         {
+          response.json({
+            status:"success",
+            message:"Login Successfully",
+            data:{
+              name:resData.name
+            }
+          })
+         }
+        }
+         else{
+          response.json({
+            status:"failed",
+            message:"Your Password is Incorrect"
+          })
+         }
+      }
+      catch(err){
+        console.log(err)
+        response.json({
+          status:"failed",
+          message:"Something error !!"
+        })
+      }
 }

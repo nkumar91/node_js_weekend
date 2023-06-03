@@ -3,6 +3,7 @@ const app = express()
 const cors = require('cors')
 const multer = require('multer')
 const authRouter = require('./src/routes/AuthRouter')
+const empRouter = require('./src/routes/EmployeeRouter')
 
 
 app.use(cors())
@@ -12,6 +13,7 @@ app.use(multer().none())
 
 
 app.use("/auth",authRouter)
+app.use("/api",empRouter);
 
 
 

@@ -39,10 +39,21 @@
 
 // const { BhaiPrintKaro1 } = require("./src/utils/Utils");
 
-const server = require("./app");
-
-const PORT_NO = 8082
+const app = require("./app");
+const http = require('http');
+const server = http.createServer(app);
+const path = require('path')
+const { Server } = require("socket.io");
+const io = new Server(server);
+const PORT_NO = 8080
 const HOST = "localhost"
-server.listen(8082,HOST,()=>{
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname , 'src/index.html'));
+  });
+  io.on('connection', (socket) => {
+    console.log('a user connected');
+  });
+server.listen(8080,HOST,()=>{
     console.log(`server started http://${HOST}:${PORT_NO}`)
 })

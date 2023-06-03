@@ -1,5 +1,6 @@
 const Collection = {
-    userinfo:"userinfo"
+    userinfo:"userinfo",
+    empDetail:"emp_detail"
 }
 
 module.exports = Collection
