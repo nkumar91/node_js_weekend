@@ -1,6 +1,7 @@
+const CONSTANT = require("../constant/Constant");
 const SignupModel = require("../model/AccountModel");
-const { comparePassword } = require("../utils/Utils");
-
+const { comparePassword, expireTokenTime } = require("../utils/Utils");
+const jwt = require('jsonwebtoken');
 exports.signup = async (request,response)=>{
     try{
       const body = request.body;
@@ -45,13 +46,23 @@ exports.signin = async (request,response)=> {
       try{
         const body = request.body;
         const query = {email:body.email}
-        const resData =  await  SignupModel.findOne(query,{name:1,_id:0,password:1})
+        const resData =  await  SignupModel.findOne(query,{name:1,_id:1,password:1})
         if(comparePassword(resData.password,body.password)){
          if(resData)
          {
+          let SecretKey = CONSTANT.JWT_SECRET_KEY
+          let bindKaroBhai = {
+              time: Date(),
+              user_id: resData._id,
+              email:resData.email,
+              name:resData.name,
+          }
+          const token = jwt.sign(bindKaroBhai, SecretKey,expireTokenTime());
+
           response.json({
             status:"success",
             message:"Login Successfully",
+            token:token,
             data:{
               name:resData.name
             }

@@ -11,3 +11,7 @@ exports.comparePassword = (oldPass,newPass)=>{
                             // bfidhgfigdsigiusfyuhfufurgiurhgiur,12345
 }
 
+exports.expireTokenTime = function(){
+    return  {expiresIn: "30d"}
+}
+

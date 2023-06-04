@@ -90,3 +90,38 @@ exports.deleteEmployee = async (request, response) => {
         })
     }
 }
+
+
+exports.updateEmployee = async (request,response,next)=>{
+    try {
+        const emp_id = request.params.emp_id;
+        const body = request.body
+        const data = {
+            empName: body.empName,
+            empAddress: body.empAddress,
+            empJobCity: body.empJobCity,
+            empDocNo: body.empDocNo,
+        }
+
+        const resData = await EmpModel.updateOne({_id:emp_id},data);
+        if (resData) {
+            response.json({
+                status: "success",
+                message: "Update Employee Successfully"
+            })
+        }
+        else {
+            response.json({
+                status: "failed",
+                message: "Already Created"
+            })
+        }
+
+    }
+    catch (err) {
+        response.json({
+            status: "failed",
+            message: "Email is is Unique"
+        })
+    }
+}
