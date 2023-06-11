@@ -13,7 +13,6 @@ exports.AuthMiddleware = function(request,response,next){
                 message:"Unauthorized ! Access token was expired"
             });
         }
-       
     }
     catch(err){
         response.status(401).json({

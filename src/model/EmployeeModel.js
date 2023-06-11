@@ -8,7 +8,7 @@ empEmail:{type:String,unique:true},
 empAddress:String,
 empJobCity:[{city:String}],
 empDocNo:[Number],
-empStatus:{type:Boolean,default:false}
+empStatus:{type:Boolean,default:false},
 },{timestamps:true})
 
 const EmpModel = mongoose.model(Collection.empDetail,EmpSchema);

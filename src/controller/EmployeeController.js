@@ -125,3 +125,22 @@ exports.updateEmployee = async (request,response,next)=>{
         })
     }
 }
+
+
+exports.uploadImage = async (request,response,next)=>{
+    try{
+        const data = request.body
+        const imagepath = request.image_nikalo_na;
+     response.json({
+        status:"upload Image",
+        path:imagepath,
+        data:data.name[0].city
+     })
+    }
+    catch(err){
+        response.json({
+            status: "failed",
+            message: "upload Failed"
+        })
+    }
+}

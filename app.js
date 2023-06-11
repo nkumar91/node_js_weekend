@@ -4,14 +4,18 @@ const cors = require('cors')
 const multer = require('multer')
 const authRouter = require('./src/routes/AuthRouter')
 const empRouter = require('./src/routes/EmployeeRouter')
-
-
+const path = require('path')
+// app.set('views', path.join(__dirname, 'src/view'))
+// app.set("view engine","ejs")
 app.use(cors())
 app.use(express.json()) 
 app.use(express.urlencoded({extended:true}))
-app.use(multer().none())
+// app.use(multer().none())
 
 
+// app.get("/",function(request,response,next){
+//     response.render('home')
+// })
 app.use("/auth",authRouter)
 app.use("/api",empRouter);
 
