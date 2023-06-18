@@ -1,4 +1,6 @@
-const EmpModel = require("../model/EmployeeModel")
+const CONSTANT = require("../constant/Constant");
+const EmpModel = require("../model/EmployeeModel");
+const ImageModel = require("../model/ImageModel");
 exports.addEmployee = async (request, response) => {
     try {
         const body = request.body
@@ -56,7 +58,7 @@ exports.getEmployee = async (request, response) => {
 exports.getSingleEmployee = async (request, response) => {
     try {
         const emp_id = request.params.emp_id;
-        const resData = await EmpModel.findOne({_id:emp_id});
+        const resData = await EmpModel.findOne({ _id: emp_id });
         if (resData) {
             response.json({
                 status: "success",
@@ -75,7 +77,7 @@ exports.getSingleEmployee = async (request, response) => {
 exports.deleteEmployee = async (request, response) => {
     try {
         const emp_id = request.params.emp_id;
-        const resData = await EmpModel.deleteOne({_id:emp_id});
+        const resData = await EmpModel.deleteOne({ _id: emp_id });
         if (resData) {
             response.json({
                 status: "success",
@@ -92,7 +94,7 @@ exports.deleteEmployee = async (request, response) => {
 }
 
 
-exports.updateEmployee = async (request,response,next)=>{
+exports.updateEmployee = async (request, response, next) => {
     try {
         const emp_id = request.params.emp_id;
         const body = request.body
@@ -103,7 +105,7 @@ exports.updateEmployee = async (request,response,next)=>{
             empDocNo: body.empDocNo,
         }
 
-        const resData = await EmpModel.updateOne({_id:emp_id},data);
+        const resData = await EmpModel.updateOne({ _id: emp_id }, data);
         if (resData) {
             response.json({
                 status: "success",
@@ -127,20 +129,64 @@ exports.updateEmployee = async (request,response,next)=>{
 }
 
 
-exports.uploadImage = async (request,response,next)=>{
-    try{
+exports.uploadImage = async (request, response, next) => {
+    try {
         const data = request.body
         const imagepath = request.image_nikalo_na;
-     response.json({
-        status:"upload Image",
-        path:imagepath,
-        data:data.name[0].city
-     })
+        const res = await ImageModel.create({ name: data.name, image_path: imagepath })
+        if (res) {
+            response.json({
+                status: "upload Image Successfully",
+                path: imagepath
+            })
+        }
     }
-    catch(err){
+    catch (err) {
         response.json({
             status: "failed",
             message: "upload Failed"
+        })
+    }
+}
+
+
+exports.getAllImage = async (request,response,next)=>{
+    try {
+        const resData = await ImageModel.find();
+        resData.map(ele=>{
+            ele.image_path = `${CONSTANT.IMAGE_HOST}${ele.image_path}`
+        })
+        if (resData) {
+            response.json({
+                status: "success",
+                data: resData
+            })
+        }
+    }
+    catch (err) {
+        response.json({
+            status: "failed",
+            message: "Error"
+        })
+    }
+}
+
+
+exports.imageDedo = async (request,response,next)=>{
+    try {
+        const resData = await ImageModel.find();
+        resData.map(ele=>{
+            ele.image_path = `${CONSTANT.IMAGE_HOST}${ele.image_path}`
+        })
+
+        response.render('payment',{myData:resData})
+      // response.render('payment',{name:"avneesh"})
+       
+    }
+    catch (err) {
+        response.json({
+            status: "failed",
+            message: "Error"
         })
     }
 }
