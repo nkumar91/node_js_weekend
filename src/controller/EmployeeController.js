@@ -55,6 +55,25 @@ exports.getEmployee = async (request, response) => {
 }
 
 
+exports.getEmployeeUi = async (request, response) => {
+    try {
+        const resData = await EmpModel.find();
+        if (resData) {
+          response.render("employee",{data:resData});
+        }
+        else{
+
+        }
+    }
+    catch (err) {
+        response.json({
+            status: "failed",
+            message: "Error"
+        })
+    }
+}
+
+
 exports.getSingleEmployee = async (request, response) => {
     try {
         const emp_id = request.params.emp_id;

@@ -50,6 +50,7 @@ exports.signin = async (request,response)=> {
         if(comparePassword(resData.password,body.password)){
          if(resData)
          {
+          request.session.name = resData.name;
           let SecretKey = CONSTANT.JWT_SECRET_KEY
           let bindKaroBhai = {
               time: Date(),

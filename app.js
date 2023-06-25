@@ -5,7 +5,11 @@ const multer = require('multer')
 const authRouter = require('./src/routes/AuthRouter')
 const empRouter = require('./src/routes/EmployeeRouter')
 const path = require('path')
-app.set('views', path.join(__dirname, 'src/views'))
+const session = require('express-session')
+
+// app.use(cookieParser());
+app.use(session({secret: "hello"}));
+app.set('views', path.join(__dirname, 'src/views')) // nodejslearn/src/views
 app.set("view engine","ejs")
 app.use(cors())
 app.use(express.json()) 
@@ -17,6 +21,7 @@ app.use(express.urlencoded({extended:true}))
 //     response.render('home')
 // })
 
+app.use("/static",express.static("./public/static"));
 app.use("/image",express.static("./public/upload"));
 app.use("/auth",authRouter)
 app.use("/api",empRouter);

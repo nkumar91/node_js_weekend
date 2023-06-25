@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <%-include('header',{data: "rahul"})%>
+    <h1 class="k">hello</h1>
+  <table border="1">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <%
+        data.forEach(ele=>{
+        %>
+            <tr>
+                <td><%=ele.empName%></td>
+                <td><%=ele.empEmail%></td>
+            </tr>
+        <%
+        }
+        )
+        %>
+    </tbody>
+  </table>
+   <script src="/static/js/main.js">
+
+   </script>
+
+</body>
+</html>
