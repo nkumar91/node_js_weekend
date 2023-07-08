@@ -39,6 +39,7 @@ exports.addEmployee = async (request, response) => {
 exports.getEmployee = async (request, response) => {
     try {
         const resData = await EmpModel.find();
+        console.log(request.session.name)
         if (resData) {
             response.json({
                 status: "success",
@@ -58,8 +59,11 @@ exports.getEmployee = async (request, response) => {
 exports.getEmployeeUi = async (request, response) => {
     try {
         const resData = await EmpModel.find();
+        request.session.name = "mukesh"
+        console.log(request.session.id)
+        const m  = request.session.name;
         if (resData) {
-          response.render("employee",{data:resData});
+          response.render("employee",{data:resData,v:m});
         }
         else{
 

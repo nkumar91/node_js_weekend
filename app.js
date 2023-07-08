@@ -6,9 +6,21 @@ const authRouter = require('./src/routes/AuthRouter')
 const empRouter = require('./src/routes/EmployeeRouter')
 const path = require('path')
 const session = require('express-session')
-
+const cookie = require('cookie-parser')
 // app.use(cookieParser());
-app.use(session({secret: "hello"}));
+const oneDay = 1000 * 60 * 60 * 24;
+
+//session middleware
+app.use(session({
+    secret: "hdheiufhiuehiu",
+    saveUninitialized:true,
+    cookie: { maxAge: oneDay },
+    resave: false
+}));
+
+app.use(cookie());
+
+
 app.set('views', path.join(__dirname, 'src/views')) // nodejslearn/src/views
 app.set("view engine","ejs")
 app.use(cors())
